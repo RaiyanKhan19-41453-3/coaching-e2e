@@ -1,0 +1,7 @@
+{
+  "name": "coaching-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "playwright test" },
+  "devDependencies": { "@playwright/test": "1.65.1", "typescript": "~5.7.2" }
+}
