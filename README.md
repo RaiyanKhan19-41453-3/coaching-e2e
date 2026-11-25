@@ -25,6 +25,7 @@ The script:
 | `attack.mjs` | Auth forgery (wrong key, `alg:none`), missing tokens, tenant-header spoofing, RBAC escalation, integration key, injection, validation, path traversal, cross-tenant reads, brute-force rate limiting |
 | `attack2.mjs` | Cross-tenant IDOR using real IDs, cross-candidate attempt/evidence/report access, foreign attempt tokens and question IDs, token reuse |
 | `attack3.mjs` | Expired tokens, malformed JSON, invalid enums, negative values, rate limits, parallel report-generation races |
+| `attack4.mjs` | Annihilation suite: JWT claim abuse, JSON/path/query fuzzing, CORS and header smuggling, content-type confusion, 30-way uniqueness race, 25-way attempt-token race, webhook replay flood |
 
 The attack scripts sign JWTs with the repository's known development key — that is why production must replace `JWT_KEY` and refuses to start with the default.
 

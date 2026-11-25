@@ -8,10 +8,8 @@ const findings=[];
 const denied=(n,r)=>{const ok=[401,403,404].includes(r.status);console.log(`${ok?'PASS':'VULN'} ${n} status=${r.status} ${r.text.slice(0,90)}`);if(!ok)findings.push(n);};
 const ok=(n,r)=>{const good=r.status>=200&&r.status<300;console.log(`${good?'PASS':'VULN'} ${n} status=${r.status} ${r.text.slice(0,90)}`);if(!good)findings.push(n);};
 
-const login=async(email,password,slug)=>{const r=await fetch(MAIN+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password,tenantSlug:slug})});return (await r.json()).accessToken;};
-const adminA=await login('admin@star.local','Password123!','star-coaching');
-const tenantA=(await (await fetch(MAIN+'/api/auth/me',{headers:{Authorization:'Bearer '+adminA}})).json()).tenantId;
-const tenantB=crypto.randomUUID();
+const tenantA=crypto.randomUUID(), tenantB=crypto.randomUUID();
+const adminA=tok('11111111-1111-1111-1111-111111111111','Admin',tenantA);
 const adminB=tok('33333333-3333-3333-3333-333333333333','Admin',tenantB);
 console.log('tenants',tenantA,tenantB);
 
