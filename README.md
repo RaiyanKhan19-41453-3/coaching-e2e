@@ -48,6 +48,17 @@ Dockerfile             node:22-bookworm + @playwright/test + chromium deps
 run-e2e.sh             Orchestration
 ```
 
+## Screenshots
+
+`capture.mjs` and `capture-main-clean.mjs` capture the UI screenshots embedded in both service READMEs.
+
+```
+docker run --rm --network host -v "$PWD":/work -w /work \
+  -v /home/shoue/coaching-platform/docs/screenshots:/main \
+  -v /home/shoue/exam-service/docs/screenshots:/exam \
+  -e SHOT_DIR=/exam --entrypoint node coaching-e2e capture.mjs
+```
+
 ## Expectations
 
 All suites exit 0 when healthy. A `VULN` line means an attack succeeded and must be fixed in the corresponding service before release.
