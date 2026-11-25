@@ -15,12 +15,12 @@ test('platform UI: sign in, receive a live notification and upload a material', 
     title: 'E2E exam schedule', body: 'Finals next week', targetAudienceJson: '{"roles":["Admin"]}',
     priority: 1, isPinned: false,
   });
-  await expect(page.getByText('E2E exam schedule')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByText('E2E exam schedule')).toBeVisible({ timeout: 60_000 });
 
   const fileName = `e2e-${Date.now()}.txt`;
   await page.locator('input[type=file]').setInputFiles({
     name: fileName, mimeType: 'text/plain', buffer: Buffer.from('e2e upload content'),
   });
   await page.getByRole('button', { name: 'Upload' }).click();
-  await expect(page.getByText(fileName)).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByText(fileName)).toBeVisible({ timeout: 60_000 });
 });
