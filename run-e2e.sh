@@ -7,7 +7,9 @@ echo "Starting stacks..."
 (cd "$ROOT/exam-service" && docker compose up -d --build >/dev/null)
 for i in $(seq 1 40); do
   curl -fsS http://localhost:18081/health/ready >/dev/null 2>&1 && \
-  curl -fsS http://localhost:18090/api/health >/dev/null 2>&1 && break
+  curl -fsS http://localhost:13000/ >/dev/null 2>&1 && \
+  curl -fsS http://localhost:18090/api/health >/dev/null 2>&1 && \
+  curl -fsS http://localhost:13010/ >/dev/null 2>&1 && break
   sleep 2
 done
 echo "Building E2E image..."

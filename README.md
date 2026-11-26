@@ -26,6 +26,7 @@ The script:
 | `attack2.mjs` | Cross-tenant IDOR using real IDs, cross-candidate attempt/evidence/report access, foreign attempt tokens and question IDs, token reuse |
 | `attack3.mjs` | Expired tokens, malformed JSON, invalid enums, negative values, rate limits, parallel report-generation races |
 | `attack4.mjs` | Annihilation suite: JWT claim abuse, JSON/path/query fuzzing, CORS and header smuggling, content-type confusion, 30-way uniqueness race, 25-way attempt-token race, webhook replay flood |
+| `smoke.mjs` | Opens every frontend route in both UIs and asserts it renders without redirects or page errors |
 
 The attack scripts sign JWTs with the repository's known development key — that is why production must replace `JWT_KEY` and refuses to start with the default.
 
@@ -35,6 +36,8 @@ The attack scripts sign JWTs with the repository's known development key — tha
 docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e attack.mjs
 docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e attack2.mjs
 docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e attack3.mjs
+docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e attack4.mjs
+docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e smoke.mjs
 ```
 
 ## Layout
@@ -53,10 +56,18 @@ run-e2e.sh             Orchestration
 `capture.mjs` and `capture-main-clean.mjs` capture the UI screenshots embedded in both service READMEs.
 
 ```
+# All platform + exam screenshots (captures against the running stacks)
 docker run --rm --network host -v "$PWD":/work -w /work \
   -v /home/shoue/coaching-platform/docs/screenshots:/main \
   -v /home/shoue/exam-service/docs/screenshots:/exam \
-  -e SHOT_DIR=/exam --entrypoint node coaching-e2e capture.mjs
+  -e MAIN_SHOT_DIR=/main -e EXAM_SHOT_DIR=/exam \
+  --entrypoint node coaching-e2e capture.mjs
+
+# Fresh-tenant platform screenshots (clean dashboard, live notifications, uploads)
+docker run --rm --network host -v "$PWD":/work -w /work \
+  -v /home/shoue/coaching-platform/docs/screenshots:/main \
+  -e MAIN_SHOT_DIR=/main \
+  --entrypoint node coaching-e2e capture-main-clean.mjs
 ```
 
 ## Expectations
