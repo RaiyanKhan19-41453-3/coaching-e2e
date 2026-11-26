@@ -42,6 +42,7 @@ docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coachi
 | `attack3.mjs` | Expired tokens, malformed JSON, invalid enums, negative values, rate limits, parallel report-generation races |
 | `attack4.mjs` | Annihilation suite: JWT claim abuse, JSON/path/query fuzzing, CORS and header smuggling, content-type confusion, 30-way uniqueness race, 25-way attempt-token race, webhook replay flood |
 | `smoke.mjs` | Opens every frontend route in both UIs and asserts it renders without redirects or page errors |
+| `inbox.mjs` | Replays the exam-results webhook with a stable event id and asserts exactly one notification is created, while a new event id creates another |
 
 The attack scripts sign JWTs with the repository's known development key — that is why production must replace `JWT_KEY` and refuses to start with the default.
 
@@ -53,6 +54,7 @@ docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coachi
 docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e attack3.mjs
 docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e attack4.mjs
 docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e smoke.mjs
+docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e inbox.mjs
 ```
 
 ## Layout
