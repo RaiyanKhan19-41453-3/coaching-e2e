@@ -16,6 +16,21 @@ The script:
 3. Runs the suites below.
 4. Stops the main-platform containers; the exam service is left running.
 
+## Seed data
+
+`seed-main.mjs` and `seed-exam.mjs` fill the dev stacks with realistic demo data (users, courses,
+batches, sessions, attendance, invoices, leads, announcements, exams, candidates, attempts,
+proctor events, evidence and reports). Both are idempotent and safe to re-run. Run them with both
+stacks up, before capturing screenshots:
+
+```bash
+docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e seed-main.mjs
+docker run --rm --network host -v "$PWD":/work -w /work --entrypoint node coaching-e2e seed-exam.mjs
+```
+
+`seed-exam.mjs` writes `/work/seed-exam.json` with a fresh single-use attempt token so
+`capture.mjs` can show a live candidate session (`SEED_FILE=/work/seed-exam.json`). It is gitignored.
+
 ## Suites
 
 | File | What it verifies |

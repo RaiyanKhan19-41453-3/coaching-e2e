@@ -29,7 +29,7 @@ await page.screenshot({path:`${OUT}/main-notifications.png`});
 await page.goto('http://localhost:13000/files');
 await page.locator('input[type=file]').setInputFiles({name:'Course-outline.pdf',mimeType:'application/pdf',buffer:Buffer.from('%PDF-1.4 demo outline')});
 await page.getByRole('button',{name:'Upload'}).click();
-await page.getByText('Course-outline.pdf').waitFor({timeout:20000});
+await page.getByRole('cell',{name:'Course-outline.pdf'}).waitFor({timeout:20000});
 await page.screenshot({path:`${OUT}/main-files.png`});
 
 await browser.close();

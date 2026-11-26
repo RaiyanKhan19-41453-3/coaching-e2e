@@ -28,6 +28,7 @@ test('exam service: candidate takes an MCQ exam and gets an AI-assisted report',
   await page.getByRole('button', { name: 'Load exam' }).click();
   await page.getByRole('button', { name: 'Start attempt' }).click();
   await expect(page.getByText('2 + 2 = ?')).toBeVisible({ timeout: 20_000 });
+  await page.getByRole('radio', { name: '4' }).check();
   await page.getByRole('button', { name: 'Submit exam' }).click();
   await expect(page.getByRole('heading', { name: 'Result' })).toBeVisible({ timeout: 20_000 });
   await api(EXAM_API, `/api/reports/exams/${exam.id}/publish`, examiner, null, 'POST');
